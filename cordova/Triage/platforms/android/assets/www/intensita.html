@@ -1,0 +1,382 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triage della frana</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+
+    <style>
+    #centrato {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+  </head>
+  <body>
+    <center><img src="img/logo.png"></center><br>
+	<div class="row">
+      <div class="large-12 columns" >
+	  <center>
+	  <h3>Accelerazione</h3>
+	  </center>
+	  </div>
+	 </div>
+	
+	
+	<div class="row">
+      <div class="small-8 columns" >
+	  <label>Velocita' nota (m/s)
+          <input id="velocita" value = 0 type="text" placeholder="" />
+          </label><BR>
+	  <label>Distanza di runout nota (H/L)
+          <input id="runout" value= 0 type="text" placeholder="" />
+          </label>
+	  </div>
+	  
+	 
+	  
+ 	  <div class="small-4 columns" >
+	  <img src="img/slope.png">
+	  </div>
+
+	</div>
+	
+	 <div class="row">
+      <div class="small-12 columns" >
+	    <br><hr>
+	  <h4>Attenuatori</h4>
+	
+	  </div>
+	</div>
+    <div class="row">
+      <div class="large-6 columns" >
+	  <input id="AT1" type="checkbox"><label for="checkbox1">Pendenza versante decrescente</label><br>
+	  <input id="AT2" type="checkbox"><label for="checkbox2">Percorso tortuoso (colate di detrito)</label><br>
+	  <input id="AT3" type="checkbox"><label for="checkbox3">Versante opposto o deviazione&gt;60&deg; </label><br>
+	  </div>
+	  
+	  <div class="large-6 columns" >
+	  <input id="AT4" type="checkbox"><label for="checkbox1">Presenza di opere antropiche mitigatorie</label><br>
+	  <input id="AT5" type="checkbox"><label for="checkbox2">Presenza di vegetazione od ostacoli naturali</label><br>
+	  <input id="AT6" type="checkbox"><label for="checkbox3">Deposizione lungo il percorso <br>(o presenza di aree di deposito a monte degli elementi di rischio)</label><br>
+	  </div>
+	</div>
+	
+	<div class="row">
+      <div class="small-12 columns" >
+	  <br><hr>
+	  <h4>Accentuatori</h4>
+	  </div>
+	</div>
+	 
+    <div class="row">
+      <div class="large-6 columns" >
+	  <input id="AC1" type="checkbox"><label for="checkbox1">Pendenza versante crescente</label><br>
+	  <input id="AC2" type="checkbox"><label for="checkbox2">Fenomeno incanalato</label><br>
+	  <input id="AC3" type="checkbox"><label for="checkbox3">Materiale sciolto saturo lungo il percorso</label><br>
+	  </div>
+	  
+	  <div class="large-6 columns" >
+	  <input id="AC4" type="checkbox"><label for="checkbox1">Abbondante disponibilita' di acqua</label><br>
+	  <input id="AC5" type="checkbox"><label for="checkbox2">Possibile sbarramento di un corso d'acqua</label><br>
+	  <input id="AC6" type="checkbox"><label for="checkbox3">Possibile generazione di tsunami</label><br>
+	  </div>
+	</div>
+	  
+	 <div class="row">
+	      <div class="large-12 columns" >
+		  <center>
+		  <a href="#" class="button round" id="avanti">Avanti</a><br>
+		  </center>
+		</div>
+	
+	</div>
+	  
+    </div>
+
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+	<script src="js/jquery.numeric.min.js"></script>
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+   </script>
+	
+	<script src="js/jquery.mobile.custom.min.js"></script>
+    <script>
+	  var alpha = 0;
+      $(document).foundation();
+	  
+	   $(document).bind('swiperight', function () {
+	 			window.location.href="accelerazione.html?id="+pagina;
+		});
+	
+	  
+	  $(document).ready(function(){
+	  $("#velocita").numeric();
+	  $("#runout").numeric();
+	  
+	  var an=0.0;
+	  var an2=0.0;
+	  
+	  
+	   tipologia = sessionStorage.getItem("tipo");
+	   var a = parseFloat(sessionStorage.getItem("volume_eroso"));
+	   var b = parseFloat(sessionStorage.getItem("volume_iniziale"));
+	   var vol = parseFloat(sessionStorage.getItem("volume_finale"));
+	   var ang = parseFloat(sessionStorage.getItem("pendenza_versante"));
+	   var senb = Math.sin(ang*Math.Pi/180);
+	   var cosb = Math.cos(ang*Math.Pi/180);
+	   //alert (a + " " +b);
+	   
+	   //alert(sessionStorage.getItem("tipo"));
+	   if (tipologia == "caduta")
+			{
+			$("#velocita").prop('disabled',true);
+			$("#runout").prop('disabled',true);
+			$("#velocita").val(">5");
+			$("#runout").val("0.7");
+			alpha = 3;
+			}
+			
+		if (tipologia == "frana_roccia")
+			{
+			if ( vol <= 250000)
+				{
+				$("#velocita").prop('disabled',true);
+				$("#runout").prop('disabled',true);
+				$("#velocita").val(">5");
+				$("#runout").val("0.65");
+				an2 = Math.atan(0.65)*Math.PI/180;
+				if (an2 <= 25)
+					alpha = 4;
+				if ((an2 > 25) && (an2 <= 35))
+					alpha = 3;
+				if ((an2 > 35) && (an2 <= 45)) 	
+					alpha = 2;
+				if (an2 > 45)
+					alpha = 1;
+				}
+				else
+				{
+				an=4.21*Math.pow(b,-0.15);
+				$("#velocita").prop('disabled',true);
+				$("#runout").prop('disabled',true);
+				$("#velocita").val(">5");
+				$("#runout").val(an.toFixed(2));
+				
+				an2 = Math.atan(an*Math.PI/180);
+				if (an2 <= 25)
+					alpha = 4;
+				if ((an2 > 25) && (an <= 35))
+					alpha = 3;
+				if ((an2 > 35) && (an <= 45)) 	
+					alpha = 2;
+				if (an2 > 45)
+					alpha = 1;
+				}
+				
+			}
+			
+		if (tipologia == "colata_detrito")
+			{
+			var incanalata = sessionStorage.getItem("incanalata");
+			if (incanalata == 1)
+				{
+				an=15*Math.pow((b+a),0.33);
+				$("#velocita").prop('disabled',true);
+				$("#runout").prop('disabled',true);
+				$("#velocita").val(">5");
+				$("#runout").val(an.toFixed(2));
+				
+				an2 = Math.atan(an*Math.PI/180);
+				if (an2 <= 25)
+					alpha = 4;
+				if ((an2 > 25) && (an <= 35))
+					alpha = 3;
+				if ((an2 > 35) && (an <= 45)) 	
+					alpha = 2;
+				if (an2 > 45)
+					alpha = 1;
+				}
+				else
+				{
+				an=0.97*Math.pow(b,-0.105);
+				$("#velocita").prop('disabled',true);
+				$("#runout").prop('disabled',true);
+				$("#velocita").val(">5");
+				$("#runout").val(an.toFixed(2));
+				
+				an2 = Math.atan(an*Math.PI/180);
+				if (an2 <= 25)
+					alpha = 4;
+				if ((an2 > 25) && (an <= 35))
+					alpha = 3;
+				if ((an2 > 35) && (an <= 45)) 	
+					alpha = 2;
+				if (an2 > 45)
+					alpha = 1;
+				}
+				
+			}
+			
+		if (tipologia == "colata_terra")
+			{
+				an=0.6*Math.pow(b,-0.07);
+				$("#velocita").prop('disabled',true);
+				$("#runout").prop('disabled',true);
+				$("#velocita").val("<0.01");
+				$("#runout").val(an.toFixed(2));
+				
+				an2 = Math.atan(an*Math.PI/180);
+				if (an2 <= 25)
+					alpha = 4;
+				if ((an2 > 25) && (an <= 35))
+					alpha = 3;
+				if ((an2 > 35) && (an <= 45)) 	
+					alpha = 2;
+				if (an2 > 45)
+					alpha = 1;
+				
+			}
+	  	
+		if (tipologia == "liquefazione")
+			{
+				an=0.27;
+				$("#velocita").prop('disabled',true);
+				$("#runout").prop('disabled',true);
+				$("#velocita").val(">5");
+				$("#runout").val(an.toFixed(2));
+				alpha = 4;
+				
+			}
+			
+		if (tipologia == "scivolamento")
+			{
+				$("#velocita").prop('disabled',true);
+				$("#runout").prop('disabled',true);
+				$("#velocita").val("<0.01");
+				$("#runout").val("bassa mobilita'");
+				alpha = 1;
+			}
+
+	  }
+	  );
+
+     
+	$('#avanti').click(function(){
+	    var indice = 0;
+		if($('#AT1').is(':checked'))
+			{
+			indice = indice-1;
+			}
+
+		if($('#AT2').is(':checked'))
+			{
+			indice = indice-1;
+			}
+			
+		if($('#AT3').is(':checked'))
+			{
+			indice = indice-2;
+			}
+		if($('#AT4').is(':checked'))
+			{
+			indice = indice-2;
+			}
+		if($('#AT5').is(':checked'))
+			{
+			indice = indice-1;
+			}
+		if($('#AT6').is(':checked'))
+			{
+			indice = indice-1;
+			}
+
+		if($('#AC1').is(':checked'))
+			{
+			indice = indice+1;
+			}
+
+		if($('#AC2').is(':checked'))
+			{
+			indice = indice+1;
+			}
+		if($('#AC3').is(':checked'))
+			{
+			indice = indice+2;
+			}
+		if($('#AC4').is(':checked'))
+			{
+			indice = indice+2;
+			}
+		if($('#AC5').is(':checked'))
+			{
+			indice = indice+3;
+			}
+		if($('#AC6').is(':checked'))
+			{
+			indice = indice+3;
+			}
+			
+		
+		var f = 0;
+		if (indice > 3)
+			f=4;
+		if ((indice>=1) && (indice<=3))
+			f=3;
+		if ((indice>=-2) && (indice<=0))
+		    f=2;
+		if (indice < -2)
+			f=1;
+			
+		var vel = 0.0;
+		if ($("#velocita").val() == ">5")
+			vel = 5;
+		if ($("#velocita").val() == "<0.01")
+			vel = 0.005;
+			
+		if (vel >= 0.01)
+			v=4;
+		if((vel >= 0.0001) && (vel<0.01))
+			v=3;
+		if((vel >= 0.000001) && (vel<0.0001))
+			v=2;
+		if (vel < 0.000001)
+			v=1;
+
+
+		sessionStorage.setItem("v",v);
+		sessionStorage.setItem("f",f);
+		sessionStorage.setItem("alpha",alpha);
+		
+		alert("F = "+f+"\nV = "+v+"\nAlha = "+alpha);
+			
+		console.log(indice);
+		
+		
+        window.location.href="elementi.html";
+		});
+		
+
+    </script>
+  </body>
+</html>

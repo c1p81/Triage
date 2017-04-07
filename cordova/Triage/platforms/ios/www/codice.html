@@ -1,0 +1,366 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Triage della frana</title>
+        <link rel="stylesheet" href="css/foundation.css" />
+        <script src="js/vendor/modernizr.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        
+        
+        <style>
+            #centrato {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                
+                /*
+                 *  Where the magic happens
+                 *  Centering method from CSS Tricks
+                 *  http://css-tricks.com/centering-percentage-widthheight-elements/
+                 */
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+            }
+        </style>
+        
+    </head>
+    <body>
+        <center><img src="img/logo.png"></center><br>
+        <div class="row">
+            <div class="large-12 columns" >
+                <center>
+                    <h3>Codice</h3>
+                </center>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        <div class="row">
+            
+        </div>
+        </div>
+        
+        <div class="row">
+            <div class="large-12 columns" >
+                <center>
+                    <canvas id="myCanvas" width="200" height="200"></canvas>
+                    <br><br>
+                    <a href="#" class="button round" id="salva">Salva i dati</a>
+                    <br><br>
+                    <a href="#" class="button round" id="avanti">Tona all'inizio</a>
+                </center>
+            </div>
+            
+        </div>
+        
+        </div>
+        
+        
+        
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script>
+            $(document).foundation();
+            
+            
+            $(document).ready(function(){
+                              var matI = new Array(4);
+                              
+                              for(i=0;i<=16;i++)
+                              matI[i]=new Array(4);
+                              matI[1][1] = 1;
+                              matI[2][1] = 1;
+                              matI[3][1] = 1;
+                              matI[4][1] = 2;
+                              matI[1][2] = 1;
+                              matI[2][2] = 1;
+                              matI[3][2] = 2;
+                              matI[4][2] = 2;
+                              matI[1][3] = 1;
+                              matI[2][3] = 2;
+                              matI[3][3] = 2;
+                              matI[4][3] = 3;
+                              matI[4][1] = 2;
+                              matI[2][4] = 3;
+                              matI[3][4] = 3;
+                              matI[4][4] = 4;
+                              matI[1][5] = 1;
+                              matI[2][5] = 1;
+                              matI[3][5] = 1;
+                              matI[4][5] = 2;
+                              matI[1][6] = 1;
+                              matI[2][6] = 2;
+                              matI[3][6] = 2;
+                              matI[4][6] = 3;
+                              matI[1][7] = 2;
+                              matI[2][7] = 2;
+                              matI[3][7] = 3;
+                              matI[4][7] = 3;
+                              matI[1][8] = 3;
+                              matI[2][8] = 3;
+                              matI[3][8] = 4;
+                              matI[4][8] = 4;
+                              matI[1][9] = 1;
+                              matI[2][9] = 1;
+                              matI[3][9] = 2;
+                              matI[4][9] = 2;
+                              matI[1][10] = 2;
+                              matI[2][10] = 2;
+                              matI[3][10] = 3;
+                              matI[4][10] = 3;
+                              matI[1][11] = 2;
+                              matI[2][11] = 3;
+                              matI[3][11] = 3;
+                              matI[4][11] = 4;
+                              matI[1][12] = 3;
+                              matI[2][12] = 4;
+                              matI[3][12] = 4;
+                              matI[4][12] = 4;
+                              matI[1][13] = 2;
+                              matI[2][13] = 2;
+                              matI[3][13] = 2;
+                              matI[1][14] = 2;
+                              matI[2][14] = 3;
+                              matI[3][14] = 3;
+                              matI[4][14] = 4;
+                              matI[1][15] = 3;
+                              matI[2][15] = 3;
+                              matI[3][15] = 4;
+                              matI[4][15] = 4;
+                              matI[1][16] = 4;
+                              matI[2][16] = 4;
+                              matI[3][16] = 4;
+                              matI[4][16] = 4;
+                              
+                              var matK = new Array(4);
+                              
+                              for(i=0;i<=4;i++)
+                              matK[i]=new Array(4);
+                              matK[1][1] = 1;
+                              matK[2][1] = 1;
+                              matK[3][1] = 1;
+                              matK[4][1] = 1;
+                              
+                              matK[1][2] = 1;
+                              matK[2][2] = 1;
+                              matK[3][2] = 1;
+                              matK[4][2] = 3;
+                              
+                              matK[1][3] = 1;
+                              matK[2][3] = 3;
+                              matK[3][3] = 3;
+                              matK[4][3] = 4;
+                              
+                              matK[1][4] = 1;
+                              matK[2][4] = 3;
+                              matK[3][4] = 4;
+                              matK[4][4] = 4;
+                              
+                              var matS = new Array(4);
+                              
+                              for(i=0;i<=4;i++)
+                              matS[i]=new Array(4);
+                              matS[1][1] = 1;
+                              matS[2][1] = 1;
+                              matS[3][1] = 2;
+                              matS[4][1] = 2;
+                              matS[1][2] = 1;
+                              matS[2][2] = 2;
+                              matS[3][2] = 3;
+                              matS[4][2] = 3;
+                              matS[1][3] = 2;
+                              matS[2][3] = 3;
+                              matS[3][3] = 3;
+                              matS[4][3] = 4;
+                              matS[1][4] = 2;
+                              matS[2][4] = 3;
+                              matS[3][4] = 4;
+                              matS[4][4] = 4;
+                              
+                              var matD = new Array(4);
+                              
+                              for(i=0;i<=4;i++)
+                              matD[i]=new Array(4);
+                              matD[1][1] = 1;
+                              matD[2][1] = 1;
+                              matD[3][1] = 1;
+                              matD[4][1] = 2;
+                              matD[1][2] = 1;
+                              matD[2][2] = 2;
+                              matD[3][2] = 3;
+                              matD[4][2] = 3;
+                              matD[1][3] = 1;
+                              matD[2][3] = 3;
+                              matD[3][3] = 3;
+                              matD[4][3] = 4;
+                              matD[1][4] = 1;
+                              matD[2][4] = 3;
+                              matD[3][4] = 4;
+                              matD[4][4] = 4;
+                              
+                              var matR = new Array(4);
+                              
+                              for(i=0;i<=4;i++)
+                              matR[i]=new Array(4);
+                              
+                              matR[1][1] = 1;
+                              matR[2][1] = 1;
+                              matR[3][1] = 1;
+                              matR[4][1] = 2;
+                              matR[1][2] = 1;
+                              matR[2][2] = 2;
+                              matR[3][2] = 3;
+                              matR[4][2] = 3;
+                              matR[1][3] = 1;
+                              matR[2][3] = 3;
+                              matR[3][3] = 3;
+                              matR[4][3] = 4;
+                              matR[1][4] = 2;
+                              matR[2][4] = 3;
+                              matR[3][4] = 4;
+                              matR[4][4] = 4;
+                              
+                              //accelerazione - deriva dalla pagina di accelerazione.html
+                              var a = parseInt(sessionStorage.getItem("a"));
+                              var ee = parseInt(sessionStorage.getItem("ee"));
+                              var h = parseInt(sessionStorage.getItem("h"));
+                              var alpha = parseInt(sessionStorage.getItem("alpha"));
+                              var f = parseInt(sessionStorage.getItem("f"));
+                              var v = parseInt(sessionStorage.getItem("v"));
+                              var m = parseInt(sessionStorage.getItem("m"));
+                              alert("A = "+ a + "\nEE = "+ee+ "\nH = "+h + "\nAlpha = "+ alpha + "\nF = "+ f  + "\nV = "+v + "\nM = "+m);
+                              
+                              
+                              if (alpha == 1)
+                              i = matI[v][f];
+                              if (alpha == 2)
+                              i = matI[v][f+4];
+                              if (alpha == 3)
+                              i = matI[v][f+8];
+                              if (alpha == 4)
+                              i = matI[v][f+12];
+                              
+                              
+                              var Ki = matK[a][m];
+                              alert("Ki = "+Ki);
+                              var Si = matS[i][Ki];
+                              alert("Si = "+Si);
+                              var Di = matD[ee][Si];
+                              alert("Di = "+Di);
+                              var Ri = matR[h][Di];
+                              alert("Ri = "+Ri);
+                              //Ri = 1;
+                              
+                              
+                              var canvas = document.getElementById('myCanvas');
+                              var context = canvas.getContext('2d');
+                              var centerX = canvas.width / 2;
+                              var centerY = canvas.height / 2;
+                              var radius = 90;
+                              
+                              context.beginPath();
+                              context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                              context.fillStyle = 'red';
+                              
+                              if (Ri == 4)
+                              {
+                              context.fillStyle = 'red';
+                              }
+                              
+                              if (Ri == 3)
+                              {
+                              context.fillStyle = 'yellow';
+                              }
+                              
+                              if (Ri == 2)
+                              {
+                              context.fillStyle = 'green';
+                              }
+                              
+                              if (Ri == 1)
+                              {
+                              context.fillStyle = 'white';
+                              }
+                              
+                              sessionStorage.setItem("Ri",Ri);
+                              context.fill();
+                              context.lineWidth = 2;
+                              context.strokeStyle = '#000000';
+                              context.stroke();
+                              });
+                              
+                              
+                              
+                              document.addEventListener('deviceready', onDeviceReady, false);
+                              
+                              var logOb;
+                              
+                              function fail(e) {
+                                  console.log("FileSystem Error");
+                                  console.dir(e);
+                              }
+        
+        function onDeviceReady() {
+            window.resolveLocalFileSystemURL(cordova.file.documentsDirectory, function(dir) {
+                                             var d = new Date();
+                                             var month = d.getMonth()+1;
+                                             var day = d.getDate();
+                                             var nomefile = 'Triage_'+(day<10 ? '0' : '') +day+ (month<10 ? '0' : '') + month + d.getFullYear()+"_"+d.getHours()+d.getMinutes()+d.getSeconds();
+                                             dir.getFile(nomefile+".xml", {create:true}, function(file) {
+                                                         logOb = file;
+                                                         });
+                                             });
+        }
+        
+        
+        $('#salva').click(function(){
+                          if(!logOb) return;
+                          var log = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+                          log = log +"<frana>\n";
+                          log = log + "<localita>"+sessionStorage.getItem("localita")+"</localita>\n";
+                          log = log + "<comune>"+sessionStorage.getItem("comune")+"</comune>\n";
+                          log = log + "<data>"+sessionStorage.getItem("data")+"</data>\n";
+                          log = log + "<ora>"+sessionStorage.getItem("ora")+"</ora>\n";
+                          log = log + "<compilatore>"+sessionStorage.getItem("compilatore")+"</compilatore>\n";
+                          log = log + "<annotazioni>"+sessionStorage.getItem("annotazioni")+"</annotazioni>\n";
+                          log = log + "<est>"+sessionStorage.getItem("est")+"</est>\n";
+                          log = log + "<nord>"+sessionStorage.getItem("nord")+"</nord>\n";
+                          log = log + "<sistema>"+sessionStorage.getItem("sistema")+"</sistema>\n";
+                          log = log + "<A>"+sessionStorage.getItem("a")+"</A>\n";
+                          log = log + "<EE>"+sessionStorage.getItem("ee")+"</EE>\n";
+                          log = log + "<H>"+sessionStorage.getItem("h")+"</H>\n";
+                          log = log + "<ALPHA>"+sessionStorage.getItem("alpha")+"</ALPHA>\n";
+                          log = log + "<F>"+sessionStorage.getItem("f")+"</F>\n";
+                          log = log + "<V>"+sessionStorage.getItem("v")+"</V>\n";
+                          log = log + "<M>"+sessionStorage.getItem("m")+"</M>\n";
+                          log = log + "<codice>"+sessionStorage.getItem("Ri")+"/<codice>\n";
+                          
+                          log = log +"</frana>";
+                          $("#salva").prop('disabled',true);
+                          $("#salva").text('Dati salvati');
+                          
+                          logOb.createWriter(function(fileWriter) {
+                                             fileWriter.seek(fileWriter.length);
+                                             var blob = new Blob([log], {type:'text/plain'});
+                                             fileWriter.write(blob);	}, fail);
+                          });
+                          
+                          
+                          $('#avanti').click(function(){
+                                             sessionStorage.clear();
+                                             window.location.href="index.html";
+                                             });
+                                             
+                                             
+            </script>
+    </body>
+</html>

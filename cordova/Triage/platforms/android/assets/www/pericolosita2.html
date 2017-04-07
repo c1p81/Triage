@@ -1,0 +1,309 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triage della frana</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+
+    <style>
+    #centrato {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+  </head>
+  <body>
+    <center><img src="img/logo.png"></center><br>
+    <div class="row">
+      <div class="large-12 columns" >
+	    <div id="titolo">
+		<center>
+		<h3>Pericolosita'(2/2)</h3><br>
+		<label id="titololabel" for="titololabel"><h3>&nbsp;</h3></label>
+		</center>
+		</div>
+  
+		<div id="id1">
+		      <form id="controllo" method="get" action="">
+				<input id="checkbox1" type="checkbox"><label for="checkbox1">Continui distacchi</label><br>
+				<input id="checkbox2" type="checkbox"><label for="checkbox2">Distacchi recenti</label><br>
+				<input id="checkbox3" type="checkbox"><label for="checkbox3">Presenza di blocchi instabili</label><br>
+				<center><a href="#" class="button round" id="caduta_massi">Ok</a></center>
+			  </form>
+
+		</div>
+
+		<div id="id2">
+				<input id="checkbox4" type="checkbox"><label for="checkbox1">Continui distacchi e presenza di aree di accumulo</label><br>
+				<input name="selezione1" id="attivita" type="radio" checked><label for="checkbox1">Presenza di fratture perimetrali con evidenze di attivita'</label><br>
+				<input name="selezione1" id="noattivita" type="radio"><label for="checkbox2">Presenza di fratture perimetriali senza evidenze di attivita'</label><br>
+				<center><a href="#" class="button round" id="frana_roccia">Ok</a></center>
+		</div>
+		
+		<div id="id3">
+		<form>
+				<input name="canale" id="incanalata" type="radio"><label for="incanalata">Incanalata</label>
+				<input name="canale" id="nonincanalata" type="radio" checked><label for="nonincanalata">Non incanalata</label><br>
+		</form>
+		<hr>
+				<input id="checkbox7" type="checkbox"><label for="checkbox1">Presenza di materiale mobilizzabile</label><br>
+				<input id="checkbox8" type="checkbox"><label for="checkbox2">Precipitazioni abbondanti in atto o previste</label><br>
+				<center><a href="#" class="button round" id="colata_detrito">Ok</a></center>
+
+		</div>
+
+		<div id="id4">
+				<input name="selezione" id="movimento" type="radio" checked><label for="checkbox1">Movimento in atto</label><br>
+				<input name="selezione" id="fermo" type="radio"><label for="checkbox2">Nessun movimento</label><br>
+				
+				<center><a href="#" class="button round" id="colata_terra">Ok</a></center>
+
+		</div>
+		
+		<div id="id5">
+				<input id="checkbox11" type="checkbox"><label for="checkbox1">Zona Sismica</label><br>
+				<input id="checkbox12" type="checkbox"><label for="checkbox2">Instabilita' di versante</label><br>
+				<input id="checkbox13" type="checkbox"><label for="checkbox2">Terreno saturo</label><br>
+				<center><a href="#" class="button round" id="liquefazione">Ok</a></center>
+
+		</div>
+		
+		<div id="id6">
+				<input id="checkbox14" type="checkbox"><label for="checkbox1">Fratture o scarpate con evidenze di attivita'</label><br>
+				<input name="selezione2" id="attivita1" type="radio" checked><label for="checkbox1">Altri indizi di movimento con evidenze di attivita'</label><br>
+				<input name="selezione2" id="noattivita1" type="radio"><label for="checkbox2">Altri indizi di movimento senza evidenze di attivita'</label><br>
+				<center><a href="#" class="button round" id="scivolamento">Ok</a></center>
+
+		</div>
+
+  
+      </div>
+
+    </div>
+
+<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <p class="lead">Deve essere selezionata almeno una opzione</p>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+<div id="myModal2" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <p class="lead">Deve essere selezionata almeno una tipologia</p>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+</script>
+	<script src="js/jquery.mobile.custom.min.js"></script>
+    <script>
+      $(document).foundation();
+	   $(document).bind('swiperight', function () {
+	 			 window.location.href="pericolosita.html";
+		});
+
+	  var h = 0;
+	  
+	  
+	  function cancella()
+			{
+			$('#id1').hide();
+			$('#id2').hide();
+			$('#id3').hide();
+			$('#id4').hide();
+			$('#id5').hide();
+			$('#id6').hide();
+			}
+	  
+	  $.urlParam = function(name){
+			var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+				if (results==null){
+					return null;
+					}
+				else{
+					return results[1] || 0;
+				}
+			}
+			
+			
+	
+
+	  $('#caduta_massi').click(function(e){
+		  /*if ($("input[type=checkbox]:checked").length === 0) {
+					e.preventDefault();
+					$('#myModal').foundation('reveal', 'open');
+					//alert('Deve essere selezionata almeno una opzione');
+					return false;
+					}*/
+		  h=2;
+		  var cb1,cb2,cb3,h;
+		  if ($('#checkbox1').prop('checked')) cb1=1;
+		  if ($('#checkbox2').prop('checked')) cb2=1;
+		  if ($('#checkbox3').prop('checked')) cb3=1;
+		  if((cb1==0) || (cb2==0) || (cb3==0)) h=2;
+  		  if((cb2==1) || (cb3==1)) h=3;
+  		  if (cb1==1 &&(cb2==1 || cb3==1)) h=4;
+
+
+		  		  alert("H = "+h);
+
+		  sessionStorage.setItem("h",h);
+		  window.location.href="magnitudo.html";
+		});
+
+	  $('#frana_roccia').click(function(e){
+		  h=2;
+		  var cb1,cb2,cb3,h;
+		  if ($('#checkbox4').prop('checked')) cb1=1;
+		  if ($('#attivita').prop('checked')) cb2=1;
+		  if ($('#noattivita').prop('checked')) cb3=1;
+		  if (cb3==1) h=3;
+  		  if((cb1==1) || (cb2==1))	h=4;
+
+		  alert("H = "+h);
+		  sessionStorage.setItem("h",h);
+		  window.location.href="magnitudo.html";
+			
+		});
+
+	  $('#colata_detrito').click(function(e){
+				
+		 if($('#incanalata').prop('checked') == true)
+				{
+				sessionStorage.setItem("incanalata","1");
+				}
+				else
+				{
+				sessionStorage.setItem("incanalata","0");
+				}
+ 		  h=2;
+		  var cb1,cb2,h;
+		  if ($('#checkbox7').prop('checked')) cb1=1;
+		  if ($('#checkbox8').prop('checked')) cb2=1;
+		  if (cb1==1) h=3;
+		  if (cb2==1) h=2;
+		  if ((cb1==1) && (cb2==1)) h=4;
+  		  alert("H = "+h);
+		  sessionStorage.setItem("h",h);
+		  window.location.href="magnitudo.html";
+
+		});
+
+		
+	  $('#colata_terra').click(function(e){
+		  h=2;
+		  var cb1,cb2,h;
+		  
+		  if ($('#movimento').prop('checked')) h=4;
+		  if ($('#fermo').prop('checked')) h=2;
+		  alert("H = "+h);
+		  sessionStorage.setItem("h",h);
+		  window.location.href="magnitudo.html";
+		});
+
+	  $('#liquefazione').click(function(e){
+		  /*if ($("input[type=checkbox]:checked").length === 0) {
+					e.preventDefault();
+					$('#myModal').foundation('reveal', 'open');
+					//alert('Deve essere selezionata almeno una opzione');
+					return false;
+					}*/
+		  h=2;
+		  var cb1,cb2,cb3,h;
+		  if ($('#checkbox11').prop('checked')) cb1=1;
+		  if ($('#checkbox12').prop('checked')) cb2=1;
+		  if ($('#checkbox13').prop('checked')) cb3=1;
+  		  if ((cb1==1) || (cb2==1) || (cb3==1)) h=3;
+		  if ((cb1==1) && (cb3==1)) h=4;
+		  if ((cb1==1) && (cb2==1)) h=4;
+		  alert("H = "+h);
+		  sessionStorage.setItem("h",h);
+		  window.location.href="magnitudo.html";
+		});
+		
+	  $('#scivolamento').click(function(e){
+		  h=2;
+		  var cb1,cb2,cb3,h;
+		  if ($('#checkbox14').prop('checked')) cb1=1;
+		  if ($('#attivita1').prop('checked')) cb2=1;
+		  if ($('#noattivita1').prop('checked')) cb3=1;
+		  if((cb1==1) || (cb2==1))	h=4;
+		  if (cb3==1) h=3;
+		  alert("H = "+h);
+		  sessionStorage.setItem("h",h);
+		  window.location.href="magnitudo.html";		});
+		
+		
+		
+	  $( document ).ready(function() {
+	    pagina = $.urlParam('id');
+		pagina = sessionStorage.getItem("id");
+		cancella();
+		if (pagina=="1")
+			{
+			$('#id1').show();
+			$("#titololabel").css("fontSize", 20);
+			$("#titololabel").text("Caduta Massi");
+			}
+		if (pagina=="2")
+			{
+			$('#id2').show();
+			$("#titololabel").css("fontSize", 20);
+			$("#titololabel").text("Frana in roccia");
+
+			}
+		if (pagina=="3")
+			{
+			$('#id3').show();
+			$("#titololabel").css("fontSize", 20);
+			$("#titololabel").text("Colata di detrito");
+
+			}
+		if (pagina=="4")
+			{
+			$('#id4').show();
+			$("#titololabel").css("fontSize", 20);
+			$("#titololabel").text("Colata di terra");
+
+			}
+		if (pagina=="5")
+			{
+			$('#id5').show();
+			$("#titololabel").css("fontSize", 20);
+			$("#titololabel").text("Frana per liquefazione");
+
+			}
+		if (pagina=="6")
+			{
+			$('#id6').show();
+			$("#titololabel").css("fontSize", 20);
+			$("#titololabel").text("Scivolamento");
+			}
+
+
+			
+		});
+	  
+      
+    </script>
+  </body>
+</html>

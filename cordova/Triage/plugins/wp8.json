@@ -1,0 +1,42 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "Properties/WMAppManifest.xml": {
+                "parents": {
+                    "/Deployment/App/Capabilities": [
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_LOCATION\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"wp-package\" value=\"File\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "{7b4412d0-a378-11e5-9324-8b19bf44a782}"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "{7b4412d0-a378-11e5-9324-8b19bf44a782}"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "{7b4412d0-a378-11e5-9324-8b19bf44a782}"
+        }
+    },
+    "dependent_plugins": {}
+}

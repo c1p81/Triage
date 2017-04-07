@@ -1,0 +1,88 @@
+Pericolosita
+
+se Liquefazione
+	se terreno saturo e zona sismica H = 4
+	se terreno saturo e instabilita' versante H=4
+	se terreno saturo oppure zona sismica oppure instabilita' versante H =3
+	altrimenti H=2
+	
+se Frana scivolamento 
+   se fratture con evidenze di attivita o altri indizi di movimento con evidenze H =4
+   se altri indizi di movimento in atto senza evidenze H = 3
+   altrimenti H = 2
+
+se Colata terra
+	se movimento in atto H =4
+	altrimenti H = 2
+	
+se Frana in roccia 
+	se presenza di fratture perimetrali senza evidenze di attivita H =3
+	se oresenza di frattture perimetrali con evidenze di attivita' oppure continui distacchi H = 4
+	altrimenti H = 2 (se tutti disattivati)
+	
+se Collata detrito 
+	se presenza di materiale mobilizzato H=3
+	se precipitazioni abbondanti in atto o previste H =2
+	se precipitazioni e materiale mobilizzato H=4
+	(non servono incanalata/non incanalata)
+	
+se Caduta Massi
+	se continui distacchi e (distacchi recenti o presenza di blocchi instabili) H=4
+	se distacchi recenti o presenza di blocchi instabili H=3
+	altrimenti H=2
+	
+	
+
+Magnitudo
+
+se lo spessore non e' noto viene calcolato come 0.15 della lunghezza
+
+i campi a destra vengono attivati solo per il caso "Colata di detrito"
+
+volume finale > 1000000 mc M=4
+se volume finale compreso tra 1000 e 1000000 mc M=3
+se volume finale compreso tra 10 e 1000 mc M=2
+se volume finale minore di 10 mc M=1
+
+
+Accelerazione
+
+se frana in roccia acc = 0.3g
+se coesivo e pendenza maggiore di 20° acc=sin(beta)-0.4*cos(beta)
+se coesivo e pendenza minore di 20° acc = 0.01g
+
+se non coesivo acc = 0.25sin(beta)
+
+se residua acc = 0.01
+se sciolto acc = sin(beta)
+
+Acc >= 0.2 A=4
+0.1 <= Acc < 0.2 A=3
+0.05 <= Acc < 0.1 A=2
+Acc < 0.05 A=1
+
+Intensita
+
+se caduta vel>5 runout=0.7
+se frana 
+
+AT1 -1
+AT2 -1
+AT3 -2
+AT4 -2
+AT5 -1
+AT6 -1
+
+AC1 +1
+AC2 +1
+AC3 +2
+AC4 +2
+AC5 +3
+AC6 +3
+
+indice >3 F=4
+1<=indice<=3 F=3
+-2<=indice<=0 F=2
+indice <-2 F=1
+
+

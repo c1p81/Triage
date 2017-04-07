@@ -1,0 +1,271 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triage della frana</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+
+    <style>
+    #centrato {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+  </head>
+  <body>
+    <center><img src="img/logo.png"></center><br>
+	<div class="row">
+      <div class="large-12 columns" >
+	  <center>
+	  <h3>Magnitudo</h3>
+	  </center>
+	  </div>
+	 </div>
+    <div class="row">
+		<div class="large-6 columns">
+		  <label>Larghezza media(m)
+          <input id="larghezza" type="number" value=0 placeholder="" />
+          </label>
+		  <label>Lunghezza media(m)
+          <input id="lunghezza" type="number" value=0 placeholder="" />
+          </label>
+		  <label>Spessore medio(m)
+          <input id="spessore" type="number" value=1 placeholder="" /><a href="#" class="button tiny round" id="noto">Spessore noto</a>
+          </label>
+		  
+		  
+		</div>
+		<div class="large-6 columns">
+		  <label>Lunghezza canale con pendenza > 15&deg - Le(m)
+          <input id="larghezza_canale" value=0 type="number" placeholder="" />
+          </label>
+		  <label>Larghezza media canale - We(m)
+          <input id="lunghezza_canale" value=0 type="number" placeholder="" />
+          </label>
+		  <label>Spessore medio detrito lungo canale - De(m)
+          <input id="spessore_detrito" value=0 type="number" placeholder="" />
+          </label>
+		  
+      </div>
+	</div>
+    <div class="row">
+	      <div class="large-12 columns" >
+		  <center>
+		  <a href="#" class="button round" id="calcola_volume">Calcolo Volume</a><br>
+		  </div>
+    </div>
+	<div class="row">
+	      <div class="large-4 columns" >
+		  <label>Volume iniziale(m<sup>3</sup>)
+          <input id="volume_iniziale" type="text" value=0 placeholder="" />
+          </label>
+		  </div>
+		  <div class="large-4 columns" >
+		  <label>Volume materiale eroso (m<sup>3</sup>)
+          <input id="volume_eroso" value=0 type="text" placeholder="" />
+          </label>
+		  </div>
+		  <div class="large-4 columns" >
+		  <label>Volume finale (m<sup>3</sup>)
+          <input id="volume_finale" type="text"  placeholder="" />
+          </label>
+		  </center>
+		</div>
+	</div>
+	
+	 <div class="row">
+	      <div class="large-12 columns" >
+		  <center>
+		  <a href="#" class="button round" id="avanti">Avanti</a><br>
+		  </center> <br><br><br>&nbsp;
+		</div>
+	
+	</div>
+	  
+    </div>
+	
+	<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	<p class="lead">Deve essere effettuato il calcolo del volume</p>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
+	<div id="myModal2" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	<p class="lead">Deve essere inseriti almeno i campi lunghezza e larghezza</p>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+	<script src="js/jquery.numeric.min.js"></script>
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+</script>
+	
+	<script src="js/jquery.mobile.min.js"></script>
+    <script>
+      $(document).foundation();
+	   $(document).bind('swiperight', function () {
+	 			window.location.href="pericolosita2.html?id="+pagina;
+		});
+	  
+	  $.urlParam = function(name){
+			var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+				if (results==null){
+					return null;
+					}
+				else{
+					return results[1] || 0;
+				}
+			}
+	  
+	  $(document).ready(function(){
+	  
+	  
+	  
+	  $("#spessore").numeric();
+	  $("#spessore_detrito").numeric();
+	  $("#larghezza").numeric();
+	  $("#larghezza_canale").numeric();
+	  $("#lunghezza").numeric();
+	  $("#lunghezza_canale").numeric();
+	  $("#volume_iniziale").numeric();
+	  $("#volume_finale").numeric();
+	  $("#volume_eroso").numeric();
+	  
+	  
+	  
+	  
+	  $("#spessore").prop('disabled',true);
+	  $("#lunghezza_canale").prop('disabled',true);
+	  $("#larghezza_canale").prop('disabled',true);
+	  $("#spessore_detrito").prop('disabled',true);
+	  $("#volume_eroso").prop('disabled',true);
+	  
+	  $("#volume_iniziale").prop('disabled',true);
+	  $("#volume_finale").prop('disabled',true);
+	  
+	  pagina = $.urlParam('id');
+	  pagina = sessionStorage.getItem("id");
+	  if (pagina=="3")
+		{
+		  $("#lunghezza_canale").prop('disabled',false);
+		  $("#larghezza_canale").prop('disabled',false);
+		  $("#spessore_detrito").prop('disabled',false);
+		}
+	  
+	  }
+	  );
+
+      $('#noto').click(function(){
+		  if($("#spessore").prop('disabled'))
+				{
+				$("#spessore").prop('disabled',false);
+				}
+				else
+				{
+				$("#spessore").prop('disabled',true);
+				}
+		  });
+
+		  
+	  $('#calcola_volume').click(function(e){
+	  
+		
+		  var larghezza=parseFloat($.trim($("#larghezza").val()));
+		  var lunghezza=parseFloat($.trim($("#lunghezza").val()));
+		  
+		  if ((lunghezza==0) && (larghezza==0))
+				{
+				e.preventDefault();
+				$('#myModal2').foundation('reveal', 'open');
+				}
+		  
+		  if($("#spessore").prop('disabled'))
+					{
+					var spessore = lunghezza*0.15;
+					$("#spessore").val(spessore.toFixed(1));
+					}
+					else
+					{
+					var spessore=parseFloat($.trim($("#spessore").val()));
+					}
+		  
+		  var vol1 = larghezza*lunghezza*spessore;
+		  
+		  
+		  //calcolo per colate
+		  var larghezza_canale=parseFloat($.trim($("#larghezza_canale").val()));
+		  var lunghezza_canale=parseFloat($.trim($("#lunghezza_canale").val()));
+		  var spessore_detrito=parseFloat($.trim($("#spessore_detrito").val()));
+		  var vol2 = larghezza_canale*lunghezza_canale*spessore_detrito;
+
+		  
+		  $("#volume_iniziale").val(vol1.toFixed(1));
+		  $("#volume_eroso").val(vol2.toFixed(1));
+		  $("#volume_finale").val((vol1+vol2).toFixed(1));
+		  
+		});
+     
+	$('#avanti').click(function(e){
+	      var volume_iniziale = $.trim($("#volume_iniziale").val());
+		  var volume_eroso = $.trim($("#volume_eroso").val());
+	      var volume_finale=$.trim($("#volume_finale").val());
+		  var m = 0;
+		  if(volume_finale.length>0)
+				{
+				if (volume_finale >= 1000000)
+					{
+					m=4;
+					}
+				if ((volume_finale >=1000) &&(volume_finale < 1000000))
+					{
+					m=3;
+					}
+				if ((volume_finale >=10) &&(volume_finale < 1000))
+					{
+					m=2;
+					}
+				if (volume_finale <10)
+					{
+					m=1;
+					}
+					
+					sessionStorage.setItem("m",m);
+					sessionStorage.setItem("volume_iniziale",volume_iniziale);
+					sessionStorage.setItem("volume_eroso",volume_eroso);
+					sessionStorage.setItem("volume_finale",volume_finale);
+					alert("M = " + m);
+					alert("Volume = "+volume_iniziale+"\n"+"Volume eroso = "+volume_eroso+"\n"+"Volume finale= "+volume_finale+"\n");
+					
+					window.location.href="accelerazione.html";
+				}
+				else
+				{
+				e.preventDefault();
+				$('#myModal').foundation('reveal', 'open');
+				}
+          
+		});
+		
+
+    </script>
+  </body>
+</html>

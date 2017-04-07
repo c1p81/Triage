@@ -1,0 +1,194 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triage della frana</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="js/jquery-ui.css">
+    <link rel="stylesheet" href="js/jquery.timepicker.css">
+
+
+    <script src="js/vendor/modernizr.js"></script>
+
+
+    <style>
+    #centrato {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+  </head>
+  <body>
+    <center><img src="img/logo.png"></center><br><br>
+    <div class="row">
+      <div class="large-12 columns" >
+
+        <h3>Informazioni generali</h3><br>
+<form id="anagrafica" action="pericolosita.html"  data-abide>
+  <div class="row">
+    <div class="large-6 columns">
+      <label>Data
+        <input type="text" id="datepicker">
+      </label>
+    </div>
+    <div class="large-6 columns">
+      <label>Ora
+        <input type="text" id="timepick"  />
+      </label>
+    </div>
+  </div>		
+		
+		
+		
+		
+  <div class="row">
+    <div class="large-6 columns">
+      <label>Localita'<small>(richiesta)</small>
+        <input type="text" id="localita" required pattern="[a-zA-Z]+"/>
+      </label>
+	  <small class="error">Campo richiesto</small>
+    </div>
+    <div class="large-6 columns">
+      <label>Comune
+        <input type="text" id="comune" />
+      </label>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="large-3 columns">
+      <label>Sistema Coordinate
+        <select id="sistema">
+          <option value="gauss">Gauss-Boaga</option>
+          <option value="starbuck">WGS 84</option>
+        </select>
+      </label>
+    </div>
+    <div class="large-3 columns">
+      <label>Nord/Lat
+        <input type="number" id="nord" />
+      </label>
+    </div>
+    <div class="large-3 columns">
+      <label>Est/Long
+        <input type="number" id="est"  />
+      </label>
+    </div>
+        <div class="large-3 columns">
+<label>GPS<br>
+        <button class="button tiny round" id="gps">Abilita GPS</button>
+</label>
+    </div>
+
+  </div>
+  
+  <div class="row">
+    <div class="large-12 columns">
+      <label>Compilatore
+        <input type="text" id="compilatore"  />
+    </div>
+  </div>
+  
+  
+   <div class="row">
+    <div class="large-12 columns">
+      <label>Annotazioni
+        <textarea id="annotazioni"></textarea>
+      </label>
+    </div>
+  </div>
+  
+  <div class="row">
+      <div class="large-12 columns" ><center> 
+       <button class="button round" id="saveAndGo" type="submit">Avanti >>></button>
+      </center>
+      </div>
+    </div>
+  
+  
+       </form> 
+    </div>
+    
+    
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/jquery.timepicker.js"></script>
+	<script src="js/jquery.numeric.min.js"></script>
+
+
+    <script>
+	
+	function formatAMPM(date) {
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		var strTime = hours + ':' + minutes + ' ' + ampm;
+		return strTime;
+		}
+	
+      $(document).foundation();
+	  
+	  $(document).ready(function(){
+			$("#nord").numeric();
+			$("#est").numeric();
+			
+			var d = new Date();
+			var month = d.getMonth()+1;
+			var day = d.getDate();
+			var output = day+'/'+ (month<10 ? '0' : '') + month + '/' +(day<10 ? '0' : '') + d.getFullYear();
+			$("#datepicker").val(output);
+			
+
+			var orario = formatAMPM(d);
+			$("#timepick").val(orario);
+		});
+	  
+	  $('#gps').click(function(){
+		  alert("GPS");
+		});
+     
+		
+	  $(function() {
+		$( "#datepicker" ).datepicker();
+	  });
+	  
+	  $('#timepick').timepicker();
+	  
+	  $("#saveAndGo").click(function() {
+		 sessionStorage.setItem("localita",$('#localita').val());
+		 sessionStorage.setItem("comune",$('#comune').val());
+		 sessionStorage.setItem("data",$('#datepicker').val());
+		 sessionStorage.setItem("ora",$('#timepick').val());
+		 sessionStorage.setItem("compilatore",$('#compilatore').val());
+		 sessionStorage.setItem("annotazioni",$('#annotazioni').val());
+		 sessionStorage.setItem("nord",$('#nord').val());
+		 sessionStorage.setItem("est",$('#est').val());
+		 sessionStorage.setItem("sistema",$('#sistema').val());
+		 //alert($("#sistema option:selected" ).text());
+         $("#anagrafica" ).submit();
+		 
+	  });
+
+
+
+
+    </script>
+  </body>
+</html>

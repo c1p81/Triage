@@ -1,0 +1,170 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triage della frana</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+
+    <style>
+    #centrato {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+  </head>
+  <body>
+    <center><img src="img/logo.png"></center><br>
+	<div class="row">
+      <div class="large-12 columns" >
+	  <center>
+	  <h3>Elementi a rischio</h3>
+	  </center>
+	  </div>
+	 </div>
+	
+	
+	
+	
+	 <div class="row">
+      <div class="small-12 columns" >
+	    <br><hr>
+	  <h4>a) Esposizione della vita umana</h4>
+	
+	  </div>
+	</div>
+    <div class="row">
+      <div class="large-4 columns" >
+	  <input id="checkbox1" type="checkbox"><label for="checkbox1">Costante(residente)</label><br>
+	  </div>
+	  
+	  <div class="large-4 columns" >
+	  <input id="checkbox1" type="checkbox"><label for="checkbox1">Temporanea/passante</label><br>
+	  </div>
+	  
+ 	  <div class="large-4 columns" >
+	  <input id="checkbox1" type="checkbox"><label for="checkbox1">Area interdetta</label><br>
+	  </div>
+
+	</div>
+	
+	<div class="row">
+      <div class="small-12 columns" >
+	  <br><hr>
+	  <h4>b)Censimento beni materiali esposti a rischio</h4>
+	  </div>
+	</div>
+	 
+    <div class="row">
+      <div class="large-4 columns" >
+	  <label>Numero abitazioni
+          <input id="spessore" type="text" placeholder="" />
+          </label><br>
+	  <input id="a1" type="checkbox"><label for="a1">Ospedali</label><br>
+	  <input id="a2" type="checkbox"><label for="a2">Scuole</label><br>
+	  <input id="a3" type="checkbox"><label for="a3">Alberghi</label><br>
+	  <input id="a4" type="checkbox"><label for="a4">Insediamenti turistici</label><br>
+	  <input id="a5" type="checkbox"><label for="a5">Beni architettonici,storici,artistici</label><br>
+	  <input id="a6" type="checkbox"><label for="a6">Edifici pubblici/Uffici</label><br>
+	  <input id="a7" type="checkbox"><label for="a7">Caserme/Carceri</label><br>
+	  <input id="a8" type="checkbox"><label for="a8">Edifici commerciali/artigianali/industriali</label><br>
+	  <input id="a9" type="checkbox"><label for="a9">Aree portuali/aeroportuali</label><br>
+	  </div>
+	  
+	  <div class="large-4 columns" >
+	  <input id="b1" type="checkbox"><label for="b1">Dighe</label><br>
+	  <input id="b2" type="checkbox"><label for="b2">Centrali energetiche</label><br>
+	  <input id="b3" type="checkbox"><label for="b3">Impianti tecnologici</label><br>
+	  <input id="b4" type="checkbox"><label for="b4">Linee di servizi</label><br>
+	  <input id="b5" type="checkbox"><label for="b5">Ferrovie principali (2 o piu' binari)</label><br>
+	  <input id="b6" type="checkbox"><label for="b6">Ferrovie secondarie (1 binario)</label><br>
+	  <input id="b7" type="checkbox"><label for="b7">Autostrade/superstrade</label><br>
+	  <input id="b8" type="checkbox"><label for="b8">Strade statali/regionali/provinciali</label><br>
+	  </div>
+	   <div class="large-4 columns" >
+	  <input id="c1" type="checkbox"><label for="c1">Strade comunali</label><br>
+	  <input id="c2" type="checkbox"><label for="c2">Strade sterrate</label><br>
+	  <input id="c3" type="checkbox"><label for="c3">Cave</label><br>
+	  <input id="c4" type="checkbox"><label for="c4">Impianti sportivi</label><br>
+	  <input id="c5" type="checkbox"><label for="c5">Parchi/Giardini pubblici</label><br>
+	  <input id="c6" type="checkbox"><label for="c6">Serre/Allevamenti</label><br>
+	  <input id="c7" type="checkbox"><label for="c7">Zone agricole di pregio</label><br>
+	  <input id="c8" type="checkbox"><label for="c8">Zone agricole generiche</label><br>
+	  <input id="c9" type="checkbox"><label for="c9">Boschi</label><br>
+	  <input id="c10" type="checkbox"><label for="c10">Pascoli</label><br>
+	  <input id="c11" type="checkbox"><label for="c11">Incolto</label><br>
+	  </div>
+	</div>
+	  
+	 <div class="row">
+	      <div class="large-12 columns" >
+		  <center>
+		  <a href="#" class="button round" id="avanti">Calcola Codice</a><br>
+		  </center> <br><br><br>&nbsp;
+		</div>
+	
+	</div>
+	  
+    </div>
+
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+	
+	  
+	  $(document).ready(function(){
+	  
+	  }
+	  );
+
+     
+	$('#avanti').click(function(){
+	
+		var ee = 1;
+	
+		if ( $('#c9').is(':checked') || $('#c10').is(':checked') || $('#c11').is(':checked'))
+			{
+			ee = 1;
+			}
+			
+		if ( $('#c8').is(':checked') || $('#c7').is(':checked') || $('#c6').is(':checked') || $('#c5').is(':checked') || $('#c4').is(':checked') || $('#c2').is(':checked'))
+			{
+			ee = 2;
+			}
+
+		if ( $('#c3').is(':checked') || $('#b8').is(':checked') || $('#b6').is(':checked') || $('#b4').is(':checked') || $('#b3').is(':checked') || $('#a5').is(':checked'))
+			{
+			ee = 3;
+			}
+
+		if ( $('#b7').is(':checked') || $('#b2').is(':checked') || $('#b1').is(':checked') || $('#a10').is(':checked') || $('#a9').is(':checked') || $('#a8').is(':checked') || $('#a7').is(':checked')  || $('#a6').is(':checked') || $('#a5').is(':checked'))
+			{
+			ee = 4;
+			}
+			
+		  sessionStorage.setItem("ee",ee);
+		  alert("EE = " + ee);
+          window.location.href="codice.html";
+		});
+		
+
+    </script>
+  </body>
+</html>

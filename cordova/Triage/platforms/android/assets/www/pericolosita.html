@@ -1,0 +1,114 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triage della frana</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+
+    <style>
+    #centrato {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+  </head>
+  <body>
+    <center><img src="img/logo.png"></center><br>
+    <div class="row">
+      <div class="large-12 columns" >
+        <center>
+		<div id="titolo">
+		<center>
+		<h3>Pericolosita' (1/2)</h3>
+		</center>
+		</div>
+
+		<ul class="small-block-grid-1 large-block-grid-3">
+				<li><a href="#" class="button round" id="caduta_massi">Caduta Massi</a></li>
+				<li><a href="#" class="button round" id="frana_roccia">Frana in roccia</a></li>
+				<li><a href="#" class="button round" id="colata_detrito">Colata di detrito</a></li>
+
+		</ul>
+		<ul class="small-block-grid-1 large-block-grid-3">
+				<li><a href="#" class="button round" id="colata_terra">Colata di terra</a></li>
+				<li><a href="#" class="button round" id="liquefazione">Liquefazione</a></li>
+				<li><a href="#" class="button round" id="scivolamento">Scivolamento</a></li>
+
+		</ul>
+
+	
+
+      </center> <br><br><br>&nbsp;
+      </div>
+
+    </div>
+
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+</script>
+	
+	<script src="js/jquery.mobile.min.js"></script>
+    <script>
+      $(document).foundation();
+	  
+
+	  $(document).bind('swiperight', function () {
+	 			window.location.href="index.html";
+		});
+
+      $('#caduta_massi').click(function(){
+		  sessionStorage.setItem("tipo","caduta");
+		  sessionStorage.setItem("id","1");
+          window.location.href="pericolosita2.html";
+		});
+      $('#frana_roccia').click(function(){
+          sessionStorage.setItem("tipo","roccia");
+		  sessionStorage.setItem("id","2");
+		  window.location.href="pericolosita2.html";
+		});
+	  $('#colata_detrito').click(function(){
+          sessionStorage.setItem("tipo","colata_detrito");
+		  sessionStorage.setItem("id","3");
+		  window.location.href="pericolosita2.html";
+		});
+	  $('#colata_terra').click(function(){
+		  sessionStorage.setItem("tipo","colata_terra");
+		  sessionStorage.setItem("id","4");
+          window.location.href="pericolosita2.html";
+		});
+	  $('#liquefazione').click(function(){
+		  sessionStorage.setItem("tipo","liquefazione");
+		  sessionStorage.setItem("id","5");
+          window.location.href="pericolosita2.html";
+		});
+		
+	$('#scivolamento').click(function(){
+		  sessionStorage.setItem("tipo","scivolamento");
+		  sessionStorage.setItem("id","6");
+          window.location.href="pericolosita2.html";
+		});	
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/lucainnocenti/Desktop/Sviluppo triage/cordova/Triage/platforms/android/build/intermediates/incremental-classes/debug/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d49049be06db5afebf754997f8e4e70650ec4344">
+        <dex dex="/Users/lucainnocenti/Desktop/Sviluppo triage/cordova/Triage/platforms/android/build/intermediates/pre-dexed/debug/classes_31601630755ae0cdf170016d895b3d18c877b596.jar" />
+    </item>
+
+</items>

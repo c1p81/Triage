@@ -1,0 +1,216 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes" />
+    <title>Triage della frana</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+
+    <style>
+    #centrato {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+  </head>
+  <body>
+    <center><img src="img/logo.png"></center><br>
+	<div class="row">
+      <div class="large-12 columns" >
+	  <center>
+	  <h3>Accelerazione</h3>
+	  </center>
+	  </div>
+	 </div>
+    <div class="row">
+      <div class="large-12 columns" >
+	  <form id="ff">
+	  <input name="selezione" id="roccia" type="radio" checked><label for="checkbox1" >Roccia</label><br>
+	  <input name="selezione" id="coesivo" type="radio"><label for="checkbox2">Materiale coesivo</label><br>
+	  <input name="selezione" id="non_coesivo" type="radio"><label for="checkbox2">Materiale non coesivo</label><br>
+	  <input name="selezione" id="residua" type="radio"><label for="checkbox2">Materiale a resistenza residua</label><br>
+	  <input name="selezione" id="sciolto" type="radio"><label for="checkbox2">Materiale granulare sciolto saturo (frana per liquefazione)</label><br>
+	  </form>
+	  <label>Pendenza versante (area di innesco) &beta;&deg;
+          <input id="pendenza" type="number" value=0 placeholder="" />
+          </label>	
+      </div>
+    
+	 <div class="row">
+	      <div class="large-12 columns" >
+		  <center>
+		  <a href="#" class="button round" id="avanti">Avanti</a><br>
+		  </center>
+		</div>
+	
+	</div>
+	  
+    </div>
+	
+	<div id="myModal1" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	<p class="lead">Valore non corretto nell'angolo della pendenza versante</p>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
+	<div id="myModal2" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	<p class="lead">Deve essere selezionato il materiale</p>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+	<script src="js/jquery.numeric.min.js"></script>
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+   </script>
+	
+	<script src="js/jquery.mobile.custom.min.js"></script>
+	
+    <script>
+      $(document).foundation();
+	  
+	
+	  $(document).bind('swiperight', function () {
+	 			window.location.href="magnitudo.html?id="+pagina;
+		});
+	
+	  
+	  $(document).ready(function(){
+		$("#pendenza").numeric();
+		});
+
+	 $.urlParam = function(name){
+			var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+				if (results==null){
+					return null;
+					}
+				else{
+					return results[1] || 0;
+				}
+			}	
+     
+	pagina = $.urlParam('id');
+    pagina = sessionStorage.getItem("id");
+
+	
+	$('#avanti').click(function(e){
+	var pendenza=parseFloat($.trim($("#pendenza").val()));
+	var beta= (pendenza*3.141592654)/180;
+	var acc = 0.0;
+	var a = 0;
+	var test = 0;
+	
+	if (!$("input[name='selezione']:checked").val()) {
+				$('#myModal2').foundation('reveal', 'open');
+				return false;
+				}
+
+	
+	
+	 if ((pendenza>=90) || (pendenza<0))
+				{
+				e.preventDefault();
+				$('#myModal1').foundation('reveal', 'open');
+				}
+				else
+				{
+				//roccia
+				if ($('input[id=roccia]:checked','#ff').val() == 'on')
+					{
+					//alert('roccia');
+					acc = 0.3;
+					a=4;
+					}
+
+				//coesivo
+				if ($('input[id=coesivo]:checked','#ff').val() == 'on')
+					{
+					//alert('coesivo');
+					if (pendenza > 20)
+						{
+						acc=Math.sin(beta)-(0.4*Math.cos(beta));
+						}
+						else
+						{
+						acc = 0.01;
+						}
+					
+					if (acc >= 0.2)
+						a=4;
+					if((acc>=0.1)&&(acc<0.2))
+						a=3;
+					if((acc>=0.05)&&(acc<0.1))
+						a=2;
+					if (acc < 0.05)	
+						a=1;
+					}
+					
+				//non coesivo
+				if ($('input[id=non_coesivo]:checked','#ff').val() == 'on')
+				
+					{
+					//alert('non_coesivo');
+					acc=0.25*Math.sin(beta);
+					if (acc >= 0.2)
+						a=4;
+					if((acc>=0.1)&&(acc<0.2))
+						a=3;
+					if((acc>=0.05)&&(acc<0.1))
+						a=2;
+					if (acc < 0.05)	
+						a=1;
+					}
+					
+				//residua
+				if ($('input[id=residua]:checked','#ff').val() == 'on')
+				
+					{
+					//alert('residua');
+					acc=0.001;
+					a=1;
+					}
+
+				//sciolto
+				if ($('input[id=sciolto]:checked','#ff').val() == 'on')
+					{
+					//alert('non_sciolto');
+					acc=Math.sin(beta);
+					if (acc >= 0.2)
+						a=4;
+					if((acc>=0.1)&&(acc<0.2))
+						a=3;
+					if((acc>=0.05)&&(acc<0.1))
+						a=2;
+					if (acc < 0.05)	
+						a=1;
+					}
+				
+				sessionStorage.setItem("a",a);
+				var pendenza_versante=$.trim($("#pendenza").val());
+				sessionStorage.setItem("pendenza_versante",pendenza_versante);
+				alert("A = " + a + "\nPendenza versante = " + pendenza_versante );
+				window.location.href="intensita.html";
+				}
+		});
+		
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<permission description=\"Required for accessing user location.\" name=\"geolocation\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.lucainnocenti.triage"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "io.lucainnocenti.triage"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "io.lucainnocenti.triage"
+        }
+    },
+    "dependent_plugins": {}
+}
